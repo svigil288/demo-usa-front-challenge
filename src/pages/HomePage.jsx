@@ -7,7 +7,7 @@ const HomePage = () => {
     const [selectedFilters,setSelectedFilters] = useState([]);
     const [populationData,setPopulationData] = useState([]);
     const [yearOptions,setYearOptions] = useState([]);
-
+    
     const getYearOptions = (data) => {
         return data.map(item => item.Year);
     }

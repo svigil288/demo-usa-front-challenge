@@ -1,7 +1,7 @@
 import axiosClient from "./axiosClient";
 
-const getPopulation = async (years=null) => {
-    let url = '?drilldowns=Nation&measures=Population,'+ encodeURIComponent('Foreign-Born Citizens');
+const getPopulation = async (drilldowns='Nation',years=null) => {
+    let url = `?drilldowns=${drilldowns}&measures=Population,`+ encodeURIComponent('Foreign-Born Citizens');
     const yearsString = years && years.join(',');
     if (yearsString) url += `&year=${yearsString}`;
     try {

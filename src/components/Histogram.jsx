@@ -29,12 +29,31 @@ const Histogram = ({ data,years }) => {
         ],
     }
 
-    const handleClick = () => {
-        console.log('click');
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Population and Foreign Citizens by Year'
+            }
+        },
+        onClick: (e) => handleBarClick(e),
+    }
+
+    const handleBarClick = (e) => {
+        const element = e.chart.getElementsAtEventForMode(e.native, 'nearest', { intersect: true }, false);
+        if (element.length > 0) {
+            const index = element[0].index;
+            const year = dataYears[index];
+            window.open(`/histogram/${year}`, '_blank');
+        }
     } 
 
     return (<div className="w-full h-[70vh]">
-        <Bar data={dataChart} options={{responsive: true}} onClick={handleClick}/>
+        <Bar data={dataChart} options={options}/>
     </div>);
 };
 
