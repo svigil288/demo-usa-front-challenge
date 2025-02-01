@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    baseURL: 'https://datausa.io/api/data',
-    headers:{'Content-Type':'application/json'},
+    baseURL: 'https://datausa.io/api',
+    timeout: 15000, //canceled after 15 seconds
 });
 
 axiosClient.interceptors.response.use(

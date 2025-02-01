@@ -1,30 +1,33 @@
 import PropTypes from 'prop-types';
 import {Chart as ChartJS,Title,Tooltip,Legend,BarElement,LinearScale,CategoryScale} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { DATA_BAR, BAR_PLUGINS } from '../constants/histogram';
 
 ChartJS.register(BarElement,LinearScale,CategoryScale,Title,Tooltip,Legend);
 
-const Histogram = ({ data,years }) => {
+const Histogram = ({ populationData=[], selectedYears=[],stateData=[],selectedState=[] }) => {
     
-    if(!data) return (<div>no data</div>);
+    const data = selectedState.length > 0 && stateData.length > 0 ? stateData : populationData;
+
+    if (data.length === 0) return;
     
-    const dataYears = years.length > 0 ? years : data.map(item => item.Year);
+    const dataYears = selectedYears.length > 0 && stateData.length === 0 ? selectedYears : data.map(item => item.Year);
     const dataChart = { 
         labels: dataYears,
         datasets: [
             {
-                label: 'Population',
+                label: DATA_BAR.Population.label,
                 data: data.map(item => item['Population']),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1,
+                backgroundColor: DATA_BAR.Population.backgroundColor,
+                borderColor: DATA_BAR.Population.borderColor,
+                borderWidth: DATA_BAR.Population.borderWidth,
             },
             {
-                label: 'Foreign Citizens',
+                label: DATA_BAR.Citizens.label,
                 data: data.map(item => item['Foreign-Born Citizens']),
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1,
+                backgroundColor: DATA_BAR.Citizens.backgroundColor,
+                borderColor: DATA_BAR.Citizens.borderColor,
+                borderWidth: DATA_BAR.Citizens.borderWidth,
             }
         ],
     }
@@ -33,11 +36,11 @@ const Histogram = ({ data,years }) => {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top',
+                position: BAR_PLUGINS.legend.position,
             },
             title: {
-                display: true,
-                text: 'Population and Foreign Citizens by Year'
+                display: BAR_PLUGINS.title.display,
+                text: BAR_PLUGINS.title.text,
             }
         },
         onClick: (e) => handleBarClick(e),
@@ -52,14 +55,16 @@ const Histogram = ({ data,years }) => {
         }
     } 
 
-    return (<div className="w-full h-[70vh]">
+    return (<div className="w-full h-[60vh] flex items-center lg:h-[70vh] lg:items-start ">
         <Bar data={dataChart} options={options}/>
     </div>);
 };
 
 Histogram.propTypes = {
-    data: PropTypes.array,
-    years: PropTypes.array
+    populationData: PropTypes.array,
+    selectedYears: PropTypes.array,
+    stateData: PropTypes.array,
+    selectedState: PropTypes.array,
 };
 
 export default Histogram;

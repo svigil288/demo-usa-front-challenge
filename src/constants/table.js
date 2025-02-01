@@ -1,4 +1,4 @@
-const COLUMNS_TABLE = [
+export const COLUMNS_TABLE = [
     {
         title: 'State Name',
         dataIndex: 'State',
@@ -25,4 +25,17 @@ const COLUMNS_TABLE = [
     },
 ];
 
-export default COLUMNS_TABLE;
+export const DATA_TABLE = {
+    Population: {
+        label: 'Population',
+        backgroundColor:'rgba(75, 192, 192, 0.6)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+    },
+    Citizens: {
+        label: 'Foreign Citizens',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+    }
+}

@@ -1,5 +1,5 @@
 import { Table, ConfigProvider } from 'antd';
-import COLUMNS_TABLE from '../constants/columnsTable';
+import { COLUMNS_TABLE } from '../constants/table';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import getPopulation from '../api/getPopulation';
@@ -26,7 +26,7 @@ const HistogramDetail = () => {
 
     return (
         <div className="container mx-auto flex justify-center items-center flex-col">
-            <h1 className="font-bold mt-6 mb-6">Population Data by State for {year}</h1>
+            <span className="font-bold mt-6 mb-6 text-lg md:text-xl">State Population Data for {year}</span>
             <ConfigProvider theme={{components: {
                 Table:{
                     headerBg: 'rgba(255, 99, 132, 0.2)',
