@@ -1,7 +1,7 @@
 import { AutoComplete } from "antd";
 import PropTypes from "prop-types";
 
-const SelectState = ({ setSelectedState, options }) => {
+const SelectState = ({ setSelectedState, options, loading=false }) => {
     
     const handleSelect = (value) => {
         const geoOption = options.filter(item => item.value === value);
@@ -29,6 +29,7 @@ const SelectState = ({ setSelectedState, options }) => {
             filterOption={(inputValue, option) =>
                 option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
               }
+            disabled={loading}
         />
         </div>
     );
@@ -36,7 +37,8 @@ const SelectState = ({ setSelectedState, options }) => {
 
 SelectState.propTypes = {
     setSelectedState: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired
+    options: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
 }
 
 export default SelectState;

@@ -17,10 +17,13 @@ const HistogramDetail = () => {
     },[year]);
 
     const formattedData = data && data.map(item => {
+        const foreignBornCitizens = item['Foreign-Born Citizens'];
+        const population = item['Population'];
+        const percentage = (foreignBornCitizens && population) ? (foreignBornCitizens / population ) * 100 : null;
         return {
             ...item,
             key: item['ID State'],
-            'Foreign-Born Citizens % of Total': ((item['Foreign-Born Citizens'] / item['Population']) * 100).toFixed(2) + ' %',
+            'Foreign-Born Citizens % of Total': percentage !== null ? percentage.toFixed(2) + ' %' : null,
         }
     });
 

@@ -31,6 +31,8 @@ const Histogram = ({ populationData=[], selectedYears=[],stateData=[],selectedSt
             }
         ],
     }
+    
+    const headerTitle = selectedState.length > 0 ? BAR_PLUGINS.title.stateText : BAR_PLUGINS.title.nationallyText;
 
     const options = {
         responsive: true,
@@ -40,9 +42,11 @@ const Histogram = ({ populationData=[], selectedYears=[],stateData=[],selectedSt
             },
             title: {
                 display: BAR_PLUGINS.title.display,
-                text: BAR_PLUGINS.title.text,
+                text: headerTitle,
+                font:{size: 15}
             }
         },
+        maintainAspectRatio: false,
         onClick: (e) => handleBarClick(e),
     }
 
@@ -55,7 +59,7 @@ const Histogram = ({ populationData=[], selectedYears=[],stateData=[],selectedSt
         }
     } 
 
-    return (<div className="w-full h-[60vh] flex items-center lg:h-[70vh] lg:items-start ">
+    return (<div className="h-[600px] w-full">
         <Bar data={dataChart} options={options}/>
     </div>);
 };

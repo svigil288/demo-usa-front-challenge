@@ -28,15 +28,24 @@ const HomePage = () => {
         return sortedStates;
     }
 
+    const clearFilters = () => { 
+        setSelectedFilters([]);
+        setSelectedState([]);
+    }
+
     useEffect(() => {
         const fetchPopulationData = async () => {
             try {
+                setLoading(true);
                 const response = await getPopulation();
                 const years = getYearOptions(response);
                 setYearOptions(years);
                 setPopulationData(response);
             } catch {
                 notification.error({message: ERROR_NOTIFICATION.message,description: ERROR_NOTIFICATION.description});
+                clearFilters();
+            } finally {
+                setLoading(false);
             }
         }
         fetchPopulationData();
@@ -46,11 +55,15 @@ const HomePage = () => {
     useEffect(() => {
         const fetchStateOptions = async () => {
             try {
+                setLoading(true);
                 const response = await getStates();
                 const states = getStateOptions(response);
                 setStateOptions(states);
             } catch {
                 notification.error({message: ERROR_NOTIFICATION.message,description: ERROR_NOTIFICATION.description});
+                clearFilters();
+            } finally {
+                setLoading(false);
             }
         }
         fetchStateOptions();
@@ -68,11 +81,12 @@ const HomePage = () => {
         const fetchStatePopulationData = async () => {
             if (selectedState.length > 0) {
                 try {
-                setLoading(true);
-                const response = await getPopulation('State',selectedFilters,selectedState[0].key);
-                setStateData(response);
+                    setLoading(true);
+                    const response = await getPopulation('State',selectedFilters,selectedState[0].key);
+                    setStateData(response);
                 } catch {
                     notification.error({message: ERROR_NOTIFICATION.message,description: ERROR_NOTIFICATION.description});
+                    clearFilters();
                 }
                 finally {
                     setLoading(false);
@@ -86,9 +100,9 @@ const HomePage = () => {
     return (
         <div className="container mx-auto flex flex-col justify-center">
             <div className="flex flex-col w-full mt-5 lg:mt-3.5 mb-1.5">
-            <SelectYear setSelectedFilters={setSelectedFilters} options={yearOptions}/>
+            <SelectYear setSelectedFilters={setSelectedFilters} value= {selectedFilters} options={yearOptions} loading={loading}/>
             {/* Bonus: State Feature */}
-            <SelectState setSelectedState={setSelectedState} options={stateOptions}/>
+            <SelectState setSelectedState={setSelectedState} options={stateOptions} loading={loading}/>
             </div>
             {loading ? <div className="container flex items-center justify-center relative min-h-[40vh]">
                 <Spin size="large" className="transform translate-x-1/2" spinning /></div>

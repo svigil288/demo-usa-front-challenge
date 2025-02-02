@@ -19,6 +19,7 @@ export const BAR_PLUGINS = {
     },
     title: {
         display: true,
-        text: 'Population and Foreign Citizens by Year'
+        nationallyText: 'Population and Foreign Citizens Nationally',
+        stateText: 'Population and Foreign Citizens by State',
     }
 }

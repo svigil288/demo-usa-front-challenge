@@ -2,7 +2,6 @@ import axios from 'axios'
 
 const axiosClient = axios.create({
     baseURL: 'https://datausa.io/api',
-    timeout: 15000, //canceled after 15 seconds
 });
 
 axiosClient.interceptors.response.use(
